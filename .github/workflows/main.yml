@@ -30,4 +30,4 @@ jobs:
         uses: docker/build-push-action@v2.6.1
         with:
           push: true
-          tags: ${{ github.repository }}/magmasite:${SHORT_SHA}
+          tags: ${{ github.repository }}/magmasite:${{ github.sha }}
