@@ -39,11 +39,11 @@ jobs:
         run: |
           echo IMAGE_REPOSITORY=$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]') >> $GITHUB_ENV
           echo IMAGE_TAG=$(echo ${{ github.ref }} | tr '[:upper:]' '[:lower:]' | awk '{split($0,a,"/"); print a[3]}') >> $GITHUB_ENV
-
+          echo "SHORT_SHA=`echo ${GITHUB_SHA} | cut -c1-8`" >> $GITHUB_ENV
 
       # Docker build
       - name: Build and push Docker images
         uses: docker/build-push-action@v2.6.1
         with:
           push: true
-          tags: docker.pkg.github.com/${{ env.IMAGE_REPOSITORY }}/magmasite:${{ env.IMAGE_TAG }}
+          tags: docker.pkg.github.com/${{ env.IMAGE_REPOSITORY }}/magmasite:${{ env.SHORT_SHA }}
