@@ -31,7 +31,7 @@ jobs:
       - name: Log in to the Container registry
         uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
         with:
-          registry: ${{ env.REGISTRY }}
+          registry: docker.pkg.github.com
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
@@ -40,10 +40,10 @@ jobs:
           echo IMAGE_REPOSITORY=$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]') >> $GITHUB_ENV
           echo IMAGE_TAG=$(echo ${{ github.ref }} | tr '[:upper:]' '[:lower:]' | awk '{split($0,a,"/"); print a[3]}') >> $GITHUB_ENV
 
-          
+
       # Docker build
       - name: Build and push Docker images
         uses: docker/build-push-action@v2.6.1
         with:
           push: true
-          tags: ${{ env.IMAGE_REPOSITORY }}/magmasite:${{ env.IMAGE_TAG }}
+          tags: docker.pkg.github.com/${{ env.IMAGE_REPOSITORY }}/magmasite:${{ env.IMAGE_TAG }}
